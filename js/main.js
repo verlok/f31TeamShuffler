@@ -1,84 +1,25 @@
 var F31DevShuffler = {
 	config: {
 		developers: {
-			column2: [
-				{
-					name: "Stefano Canducci",
-					twitter: "steno_c",
-					side: 1
-				},
-				{
-					name: "Lucas Ramos",
-					twitter: "lucas__ramos",
-					side: 1
-				},
-				{
-					name: "Antonio Rinaldi",
-					twitter: "",
-					side: 0
-				},
-				{
-					name: "Francesco Bianco",
-					twitter: "",
-					side: 0
-				},
-				{
-					name: "Fabio Rapetti",
-					twitter: "",
-					side: 0
-				},
-				{
-					name: "Alessandro \"portal\" Gentile",
-					twitter: "",
-					side: 1
-				},
-				{
-					name: "Arcangelo Casavola",
-					twitter: "",
-					side: 1
-				}
+			group1: [
+				{ name: "Andrea \"Verlok\" Verlicchi", twitter: "verlok", side: 1 },
+				{ name: "Aleksander \"Ketchup\" Bethke", twitter: "", side: 0 },
+				{ name: "Alessandro \"Allino\" Valenti", twitter: "", side: 0 },
+				{ name: "Alexey \"Guk\" Gukezhev", twitter: "", side: 0 },
+				{ name: "Marc Keane Mempin", twitter: "", side: 0 },
+				{ name: "David Barbieri", twitter: "", side: 1 },
+				{ name: "Matteo Gazziola", twitter: "", side: 1 }
+				//, { name: "Nicola Bagnasco", twitter: "", side: 0 }
+				//, { name: "Mauro Verardi", twitter: "", side: 0 }
 			],
-			column1: [
-				{
-					name: "Andrea \"Verlok\" Verlicchi",
-					twitter: "verlok",
-					side: 1
-				},
-				{
-					name: "Aleksander \"Ketchup\" Bethke",
-					twitter: "",
-					side: 0
-				},
-				{
-					name: "Alessandro \"Allino\" Valenti",
-					twitter: "",
-					side: 0
-				},
-				{
-					name: "Alexey \"Guk\" Gukezhev",
-					twitter: "",
-					side: 0
-				},
-				{
-					name: "Marc Mempin",
-					twitter: "",
-					side: 0
-				},
-				{
-					name: "David Barbieri",
-					twitter: "",
-					side: 1
-				},
-				{
-					name: "Matteo Gazziola",
-					twitter: "",
-					side: 1
-				}/*,
-				{
-					name: "Mauro Verardi",
-					twitter: "",
-					side: 0
-				}*/
+			group2: [
+				{ name: "Stefano Canducci", twitter: "steno_c", side: 1 },
+				{ name: "Lucas Ramos", twitter: "lucas__ramos", side: 1 },
+				{ name: "Antonio Rinaldi", twitter: "", side: 0 },
+				{ name: "Francesco \"mr. White\" Bianco", twitter: "", side: 0 },
+				{ name: "Fabio Rapetti", twitter: "", side: 0 },
+				{ name: "Alessandro \"portal\" Gentile", twitter: "", side: 1 },
+				{ name: "Arcangelo Casavola", twitter: "", side: 1 }
 			]
 		}
 	}
@@ -134,23 +75,26 @@ var F31DevShuffler = {
 		return pairEl;
 	}
 
-	function randomizer() {
-		return 0.5 - Math.random();
+	function addRandomDevelopers() {
+
+		var developers = F31DevShuffler.config.developers,
+			expertDevelopers = developers.group1,
+			noviceDevelopers = developers.group2,
+			pairsEl = document.querySelector('.pairs'),
+			rows = Math.max(expertDevelopers.length, noviceDevelopers.length);
+
+		function randomizer() {
+			return 0.5 - Math.random();
+		}
+
+		expertDevelopers.sort(randomizer);
+		noviceDevelopers.sort(randomizer);
+
+		for (var i = 0; i < rows; i++) {
+			pairsEl.appendChild(getPairEl(expertDevelopers[i], noviceDevelopers[i]));
+		}
 	}
 
-	var i,
-		developers = F31DevShuffler.config.developers,
-		expertDevelopers = developers.column1,
-		noviceDevelopers = developers.column2,
-		pairsEl = document.querySelector('.pairs'),
-		rows = Math.max(expertDevelopers.length, noviceDevelopers.length);
-
-	expertDevelopers.sort(randomizer);
-	noviceDevelopers.sort(randomizer);
-
-	for (i = 0; i < rows; i++) {
-		pairsEl.appendChild(getPairEl(expertDevelopers[i], noviceDevelopers[i]));
-	}
-
-
+	addRandomDevelopers();
+s
 }());
