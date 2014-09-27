@@ -1,7 +1,7 @@
 var F31DevShuffler = {
 	config: {
 		developers: {
-			novices: [
+			column2: [
 				{
 					name: "Stefano Canducci",
 					twitter: "steno_c",
@@ -31,9 +31,14 @@ var F31DevShuffler = {
 					name: "Alessandro \"portal\" Gentile",
 					twitter: "",
 					side: 1
+				},
+				{
+					name: "Arcangelo Casavola",
+					twitter: "",
+					side: 1
 				}
 			],
-			experts: [
+			column1: [
 				{
 					name: "Andrea \"Verlok\" Verlicchi",
 					twitter: "verlok",
@@ -68,7 +73,12 @@ var F31DevShuffler = {
 					name: "Matteo Gazziola",
 					twitter: "",
 					side: 1
-				}
+				}/*,
+				{
+					name: "Mauro Verardi",
+					twitter: "",
+					side: 0
+				}*/
 			]
 		}
 	}
@@ -87,8 +97,8 @@ var F31DevShuffler = {
 
 		if (typeof devObj === 'undefined') {
 			devObj = {
-				name: 'Nessuno',
-				twitter: 'nobody',
+				name: '(empty)',
+				twitter: '',
 				side: null
 			}
 		}
@@ -98,7 +108,7 @@ var F31DevShuffler = {
 		// USE TWITTER API TO GET IMG
 
 		var nameEl = getHtmlRow({className: "name", text: devObj.name, tagName: 'h3'});
-		var sideEl = getHtmlRow({className: "side", text: !!devObj.side ? 'Client' : 'Server'});
+		var sideEl = getHtmlRow({className: "side", text: devObj.side === null ? 'none' : !!devObj.side ? 'Client' : 'Server'});
 		var twitterEl = getHtmlRow({className: "twitter", text: '@' + devObj.twitter});
 
 		var liEl = document.createElement('li');
@@ -130,8 +140,8 @@ var F31DevShuffler = {
 
 	var i,
 		developers = F31DevShuffler.config.developers,
-		expertDevelopers = developers.experts,
-		noviceDevelopers = developers.novices,
+		expertDevelopers = developers.column1,
+		noviceDevelopers = developers.column2,
 		pairsEl = document.querySelector('.pairs'),
 		rows = Math.max(expertDevelopers.length, noviceDevelopers.length);
 
