@@ -1,1 +1,45 @@
-fd
+/* BASE STYLES */
+
+@import "compass/css3";
+
+$border-color: #666;
+
+body {
+	margin: 1em;
+}
+
+ul, li {
+	list-style-type: none;
+	margin: 0; padding: 0;
+}
+
+.columns {
+	@include display-flex;
+}
+
+.column {
+	@include flex(1 0);
+}
+
+.developers {
+	@extend .columns;
+}
+
+.developer {
+	@extend .column;
+	h3 {
+		margin: 0 auto;
+	}
+	padding: 1em;
+	border-top: 1px solid $border-color;
+	border-left: 1px solid $border-color;
+	&:last-child {
+		border-right: 1px solid $border-color;
+	}
+}
+
+.pairs {
+	&:last-child {
+		border-bottom: 1px solid $border-color;
+	}
+}
