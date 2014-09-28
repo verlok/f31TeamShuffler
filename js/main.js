@@ -3,25 +3,25 @@
 	var F31DevShufflerConfig = {
 		developers: {
 			group1: [
-				{ name: "Andrea \"VerLok\" Verlicchi", className: "verlok", side: 1 },
-				{ name: "Aleksander \"Ketchup\" Bethke", className: "ketchup", side: 0 },
-				//{ name: "Alessandro \"Allino\" Valenti", className: "allino", side: 0 },
-				{ name: "Alexey \"Guk\" Gukezhev", className: "guk", side: 0 },
-				{ name: "Marc Keane Mempin", className: "marc", side: 0 },
-				{ name: "David Barbieri", className: "david", side: 1 },
-				{ name: "Matteo Gazziola", className: "gazzi", side: 1 },
-				{ name: "Bruno Scopelliti", className: "bruno", side: 1 }
-				//, { name: "Nicola Bagnasco", className: "nic", side: 0 }
-				//, { name: "Mauro Verardi", className: "mauro", side: 0 }
+				{ name: "Andrea \"Verlok\" Verlicchi", className: "verlok", side: 1, mail: 'andrea.verlicchi' },
+				{ name: "Aleksander \"Ketchup\" Bethke", className: "ketchup", side: 0, mail: 'aleksander.bethke' },
+				//{ name: "Alessandro \"Allino\" Valenti", className: "allino", side: 0, mail: '' },
+				{ name: "Alexey \"Guk\" Gukezhev", className: "guk", side: 0, mail: 'alexey.gukezhev' },
+				{ name: "Marc Keane Mempin", className: "marc", side: 0, mail: 'marc.mempin' },
+				{ name: "David Barbieri", className: "david", side: 1, mail: 'david.barbieri' },
+				{ name: "Matteo Gazziola", className: "gazzi", side: 1, mail: 'matteo.gazziola' },
+				{ name: "Bruno Scopelliti", className: "bruno", side: 1, mail: 'bruno.scopelliti' }
+				//, { name: "Nicola Bagnasco", className: "nic", side: 0, mail: '' }
+				//, { name: "Mauro Verardi", className: "mauro", side: 0, mail: '' }
 			],
 			group2: [
-				{ name: "Stefano Canducci", className: "steno", side: 1 },
-				{ name: "Lucas Ramos", className: "lucas", side: 1 },
-				{ name: "Antonio Rinaldi", className: "anto", side: 0 },
-				{ name: "Francesco Bianco", className: "white", side: 0 },
-				{ name: "Fabio Rapetti", className: "fabio", side: 0 },
-				{ name: "Alessandro \"Portal\" Gentile", className: "portal", side: 1 },
-				{ name: "Arcangelo Casavola", className: "arca", side: 1 }
+				{ name: "Stefano Canducci", className: "steno", side: 1, mail: 'stefano.canducci' },
+				{ name: "Lucas Ramos", className: "lucas", side: 1, mail: 'lucas.ramos' },
+				{ name: "Antonio Rinaldi", className: "anto", side: 0, mail: 'antonio.rinaldi' },
+				{ name: "Francesco Bianco", className: "white", side: 0, mail: 'francesco.bianco' },
+				{ name: "Fabio Rapetti", className: "fabio", side: 0, mail: 'fabio.rapetti' },
+				{ name: "Alessandro \"Portal\" Gentile", className: "portal", side: 1, mail: 'alessandro.gentile' },
+				{ name: "Arcangelo Casavola", className: "arca", side: 1, mail: 'arcangelo.casavola' }
 			]
 		}
 	};
@@ -30,6 +30,9 @@
 		var el = document.createElement(!!options.tagName ? options.tagName : 'div');
 		el.className = options.className;
 		el.innerText = options.text;
+		for (var i in options.attributes) {
+			el.setAttribute(i, options.attributes[i]);
+		}
 		return el;
 	}
 
@@ -38,29 +41,35 @@
 		if (typeof devObj === 'undefined') {
 			devObj = {
 				name: '(empty)',
-				className: 'empty',
-				side: null
+				className: 'empty'
 			};
 		}
+
+		var liEl = document.createElement('li');
+		liEl.className = 'developer ' + devObj.className + ' i' + devObj.index;
 
 		var picEl = document.createElement('div');
 		picEl.className = "pic";
 
-		var nameEl = getHtmlRow({className: "name", text: devObj.name});
-		var sideEl = getHtmlRow({className: "side", text: devObj.side === null ? 'none' : !!devObj.side ? 'clientSide' : 'ServerSide'});
-
-		var liEl = document.createElement('li');
-		liEl.className = 'developer '+devObj.className;
-
 		var infoEl = document.createElement('div');
 		infoEl.className = 'info';
+
+		var nameEl = getHtmlRow({className: "name", text: devObj.name});
 		infoEl.appendChild(nameEl);
-		infoEl.appendChild(sideEl);
+
+		if (devObj.mail !== null) {
+			var fullMail = devObj.mail + '@yoox.com';
+			var mailEl = getHtmlRow({className: "mail", text: fullMail, attributes: {'href': 'mailto:' + fullMail}, tagName: 'a' });
+			infoEl.appendChild(mailEl);
+		}
+
+		if (devObj.side !== null) {
+			var sideEl = getHtmlRow({className: "side", text: (!!devObj.side ? 'clientSide' : 'ServerSide') + ' developer'});
+			infoEl.appendChild(sideEl);
+		}
 
 		liEl.appendChild(picEl);
 		liEl.appendChild(infoEl);
-
-
 
 		return liEl;
 	}
@@ -81,21 +90,38 @@
 	function addRandomDevelopers() {
 
 		var developers = F31DevShufflerConfig.developers,
-			expertDevelopers = developers.group1,
-			noviceDevelopers = developers.group2,
+			group1developers = developers.group1,
+			group2developers = developers.group2,
 			pairsEl = document.querySelector('.pairs'),
-			rows = Math.max(expertDevelopers.length, noviceDevelopers.length);
+			rows = Math.max(group1developers.length, group2developers.length);
 
 		function randomizer() {
 			return 0.5 - Math.random();
 		}
 
-		expertDevelopers.sort(randomizer);
-		noviceDevelopers.sort(randomizer);
+		function addIndexToDevArray(devArray) {
+			for (var i = 0, l = devArray.length; i < l; i += 1) {
+				devArray[i].index = i;
+			}
+		}
+
+		function showDevelopers() {
+			var developerEls = document.querySelectorAll('.developer');
+			for (var j = 0, l = developerEls.length; j < l; j++) {
+				developerEls[j].classList.add('appear');
+			}
+		}
+
+		addIndexToDevArray(group1developers);
+		addIndexToDevArray(group2developers);
+		group1developers.sort(randomizer);
+		group2developers.sort(randomizer);
 
 		for (var i = 0; i < rows; i++) {
-			pairsEl.appendChild(getPairEl(expertDevelopers[i], noviceDevelopers[i]));
+			pairsEl.appendChild(getPairEl(group1developers[i], group2developers[i]));
 		}
+
+		setTimeout(showDevelopers, 0);
 	}
 
 	function clearDevelopersList() {
@@ -105,7 +131,7 @@
 
 	function addButtonsListeners() {
 		var button = document.querySelector('.buttonsRow .randomize');
-		button.addEventListener("click", function() {
+		button.addEventListener("click", function () {
 			clearDevelopersList();
 			addRandomDevelopers();
 		});
