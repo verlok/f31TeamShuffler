@@ -1,3 +1,6 @@
+/*! F31TeamShuffler - v0.1.0 - 2014-09-28
+* http://verlok.github.io/f31TeamShuffler/
+* Copyright (c) 2014 Andrea "verlok" Verlicchi; Licensed MIT */
 (function () {
 
 	var F31DevShufflerConfig = {
