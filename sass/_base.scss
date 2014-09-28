@@ -4,6 +4,7 @@
 
 $border-color: #666;
 
+
 body {
 	margin: 1em;
 }
@@ -13,33 +14,72 @@ ul, li {
 	margin: 0; padding: 0;
 }
 
-.columns {
+h1 {
+	text-align: center;
+}
+
+.flexColumns {
 	@include display-flex;
 }
 
-.column {
+.flexGrow {
 	@include flex(1 0);
 }
 
+.pair {
+	margin: 1em 0;
+	box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
 .developers {
-	@extend .columns;
+	@extend .flexColumns;
 }
 
 .developer {
-	@extend .column;
-	h3 {
-		margin: 0 auto;
-	}
+	@extend .flexColumns;
+	@extend .flexGrow;
 	padding: 1em;
 	border-top: 1px solid $border-color;
 	border-left: 1px solid $border-color;
+	border-bottom: 1px solid $border-color;
 	&:last-child {
 		border-right: 1px solid $border-color;
 	}
+
+	.pic {
+		//align-items: flex-start;
+		//float: left;
+		width: 89px;
+		height: 89px;
+		flex-shrink: 0;
+	}
+
+	&:first-child {
+		.info {
+			flex: 1;
+		}
+		.pic {
+			order: 1;
+			margin-left: .5em;
+		}
+	}
+
+	&:last-child {
+		.pic {
+			margin-right: .5em;
+		}
+	}
+
+	.side {
+		font-family: monospace;
+	}
+
+	.name {
+		font-weight: bold;
+		font-size: 1.3em;
+	}
 }
 
-.pairs {
-	&:last-child {
-		border-bottom: 1px solid $border-color;
-	}
+.buttonsRow {
+	text-align: center;
 }

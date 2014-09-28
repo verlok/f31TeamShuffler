@@ -2,24 +2,25 @@ var F31DevShuffler = {
 	config: {
 		developers: {
 			group1: [
-				{ name: "Andrea \"Verlok\" Verlicchi", twitter: "verlok", side: 1 },
-				{ name: "Aleksander \"Ketchup\" Bethke", twitter: "", side: 0 },
-				{ name: "Alessandro \"Allino\" Valenti", twitter: "", side: 0 },
-				{ name: "Alexey \"Guk\" Gukezhev", twitter: "", side: 0 },
-				{ name: "Marc Keane Mempin", twitter: "", side: 0 },
-				{ name: "David Barbieri", twitter: "", side: 1 },
-				{ name: "Matteo Gazziola", twitter: "", side: 1 }
-				//, { name: "Nicola Bagnasco", twitter: "", side: 0 }
-				//, { name: "Mauro Verardi", twitter: "", side: 0 }
+				{ name: "Andrea \"VerLok\" Verlicchi", className: "verlok", side: 1 },
+				{ name: "Aleksander \"Ketchup\" Bethke", className: "ketchup", side: 0 },
+				//{ name: "Alessandro \"Allino\" Valenti", className: "allino", side: 0 },
+				{ name: "Alexey \"Guk\" Gukezhev", className: "guk", side: 0 },
+				{ name: "Marc Keane Mempin", className: "marc", side: 0 },
+				{ name: "David Barbieri", className: "david", side: 1 },
+				{ name: "Matteo Gazziola", className: "gazzi", side: 1 },
+				{ name: "Bruno Scopelliti", className: "bruno", side: 1 }
+				//, { name: "Nicola Bagnasco", className: "nic", side: 0 }
+				//, { name: "Mauro Verardi", className: "mauro", side: 0 }
 			],
 			group2: [
-				{ name: "Stefano Canducci", twitter: "steno_c", side: 1 },
-				{ name: "Lucas Ramos", twitter: "lucas__ramos", side: 1 },
-				{ name: "Antonio Rinaldi", twitter: "", side: 0 },
-				{ name: "Francesco \"mr. White\" Bianco", twitter: "", side: 0 },
-				{ name: "Fabio Rapetti", twitter: "", side: 0 },
-				{ name: "Alessandro \"portal\" Gentile", twitter: "", side: 1 },
-				{ name: "Arcangelo Casavola", twitter: "", side: 1 }
+				{ name: "Stefano Canducci", className: "steno", side: 1 },
+				{ name: "Lucas Ramos", className: "lucas", side: 1 },
+				{ name: "Antonio Rinaldi", className: "anto", side: 0 },
+				{ name: "Francesco Bianco", className: "white", side: 0 },
+				{ name: "Fabio Rapetti", className: "fabio", side: 0 },
+				{ name: "Alessandro \"Portal\" Gentile", className: "portal", side: 1 },
+				{ name: "Arcangelo Casavola", className: "arca", side: 1 }
 			]
 		}
 	}
@@ -39,25 +40,28 @@ var F31DevShuffler = {
 		if (typeof devObj === 'undefined') {
 			devObj = {
 				name: '(empty)',
-				twitter: '',
 				side: null
 			}
 		}
 
 		var picEl = document.createElement('div');
 		picEl.className = "pic";
-		// USE TWITTER API TO GET IMG
 
-		var nameEl = getHtmlRow({className: "name", text: devObj.name, tagName: 'h3'});
-		var sideEl = getHtmlRow({className: "side", text: devObj.side === null ? 'none' : !!devObj.side ? 'Client' : 'Server'});
-		var twitterEl = getHtmlRow({className: "twitter", text: '@' + devObj.twitter});
+		var nameEl = getHtmlRow({className: "name", text: devObj.name});
+		var sideEl = getHtmlRow({className: "side", text: devObj.side === null ? 'none' : !!devObj.side ? 'clientSide' : 'ServerSide'});
 
 		var liEl = document.createElement('li');
-		liEl.className = 'developer';
+		liEl.className = 'developer '+devObj.className;
+
+		var infoEl = document.createElement('div');
+		infoEl.className = 'info';
+		infoEl.appendChild(nameEl);
+		infoEl.appendChild(sideEl);
+
 		liEl.appendChild(picEl);
-		liEl.appendChild(nameEl);
-		liEl.appendChild(sideEl);
-		liEl.appendChild(twitterEl);
+		liEl.appendChild(infoEl);
+
+
 
 		return liEl;
 	}
@@ -95,6 +99,20 @@ var F31DevShuffler = {
 		}
 	}
 
+	function clearDevelopersList() {
+		var pairsEl = document.querySelector('.pairs');
+		pairsEl.innerHTML = '';
+	}
+
+	function addButtonsListeners() {
+		var button = document.querySelector('.buttonsRow .randomize');
+		button.addEventListener("click", function() {
+			clearDevelopersList();
+			addRandomDevelopers();
+		});
+	}
+
 	addRandomDevelopers();
-s
+	addButtonsListeners();
+
 }());
