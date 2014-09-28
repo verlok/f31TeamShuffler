@@ -51,15 +51,15 @@ h1 {
 		//float: left;
 		width: 89px;
 		height: 89px;
-		flex-shrink: 0;
+		@include flex-shrink(0);
 	}
 
 	&:first-child {
 		.info {
-			flex: 1;
+			@extend .flexGrow;
 		}
 		.pic {
-			order: 1;
+			@include order(1);
 			margin-left: .5em;
 		}
 	}
