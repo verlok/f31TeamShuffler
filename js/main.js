@@ -57,21 +57,19 @@
 		var nameEl = getHtmlRow({className: "name", text: devObj.name});
 		infoEl.appendChild(nameEl);
 
-		if (devObj.side !== null) {
-			var sideEl = getHtmlRow({className: "side", text: (!!devObj.side ? 'clientSide' : 'ServerSide') + ' developer'});
-			infoEl.appendChild(sideEl);
-		}
-
 		if (devObj.mail !== null) {
 			var fullMail = devObj.mail + '@yoox.com';
 			var mailEl = getHtmlRow({className: "mail", text: fullMail, attributes: {'href': 'mailto:' + fullMail}, tagName: 'a' });
 			infoEl.appendChild(mailEl);
 		}
 
+		if (devObj.side !== null) {
+			var sideEl = getHtmlRow({className: "side", text: (!!devObj.side ? 'clientSide' : 'ServerSide') + ' developer'});
+			infoEl.appendChild(sideEl);
+		}
 
 		liEl.appendChild(picEl);
 		liEl.appendChild(infoEl);
-
 
 		return liEl;
 	}

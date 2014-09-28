@@ -3,7 +3,7 @@
 @import "compass/css3";
 
 $border-color: #666;
-
+$border-radius: 100px;
 
 body {
 	margin: 1em;
@@ -28,6 +28,7 @@ h1 {
 
 .pair {
 	margin: 1em 0;
+	border-radius: $border-radius;
 	box-shadow: 0 5px 10px rgba(0,0,0,.2);
 }
 
@@ -55,8 +56,12 @@ h1 {
 	}
 
 	&:first-child {
+
+		border-radius: $border-radius 0 0 $border-radius;
+
 		.info {
 			@extend .flexGrow;
+			text-align: right;
 		}
 		.pic {
 			@include order(1);
@@ -65,18 +70,32 @@ h1 {
 	}
 
 	&:last-child {
+
+		border-radius: 0 $border-radius $border-radius 0 ;
+
 		.pic {
 			margin-right: .5em;
 		}
 	}
 
 	.side {
-		font-family: monospace;
+		//display: none;
+		//font-family: monospace;
 	}
 
 	.name {
 		font-weight: bold;
 		font-size: 1.3em;
+	}
+
+	.mail {
+		display: block;
+		//font-size: 80%;
+		color: #888;
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
 	}
 }
 
