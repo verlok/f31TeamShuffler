@@ -3,7 +3,7 @@
 	var F31DevShufflerConfig = {
 		developers: {
 			group1: [
-				{ name: "Andrea \"VerLok\" Verlicchi", className: "verlok", side: 1, mail: 'andrea.verlicchi' },
+				{ name: "Andrea \"Verlok\" Verlicchi", className: "verlok", side: 1, mail: 'andrea.verlicchi' },
 				{ name: "Aleksander \"Ketchup\" Bethke", className: "ketchup", side: 0, mail: 'aleksander.bethke' },
 				//{ name: "Alessandro \"Allino\" Valenti", className: "allino", side: 0, mail: '' },
 				{ name: "Alexey \"Guk\" Gukezhev", className: "guk", side: 0, mail: 'alexey.gukezhev' },
@@ -46,7 +46,7 @@
 		}
 
 		var liEl = document.createElement('li');
-		liEl.className = 'developer ' + devObj.className;
+		liEl.className = 'developer ' + devObj.className + ' i' + devObj.index;
 
 		var picEl = document.createElement('div');
 		picEl.className = "pic";
@@ -90,20 +90,28 @@
 	function addRandomDevelopers() {
 
 		var developers = F31DevShufflerConfig.developers,
-			expertDevelopers = developers.group1,
-			noviceDevelopers = developers.group2,
+			group1developers = developers.group1,
+			group2developers = developers.group2,
 			pairsEl = document.querySelector('.pairs'),
-			rows = Math.max(expertDevelopers.length, noviceDevelopers.length);
+			rows = Math.max(group1developers.length, group2developers.length);
 
 		function randomizer() {
 			return 0.5 - Math.random();
 		}
 
-		expertDevelopers.sort(randomizer);
-		noviceDevelopers.sort(randomizer);
+		function addIndexToDevArray(devArray) {
+			for (var i = 0, l = devArray.length; i < l; i += 1) {
+				devArray[i].index = i;
+			}
+		}
+
+		addIndexToDevArray(group1developers);
+		addIndexToDevArray(group2developers);
+		group1developers.sort(randomizer);
+		group2developers.sort(randomizer);
 
 		for (var i = 0; i < rows; i++) {
-			pairsEl.appendChild(getPairEl(expertDevelopers[i], noviceDevelopers[i]));
+			pairsEl.appendChild(getPairEl(group1developers[i], group2developers[i]));
 		}
 	}
 
