@@ -105,6 +105,13 @@
 			}
 		}
 
+		function showDevelopers() {
+			var developerEls = document.querySelectorAll('.developer');
+			for (var j = 0, l = developerEls.length; j < l; j++) {
+				developerEls[j].classList.add('appear');
+			}
+		}
+
 		addIndexToDevArray(group1developers);
 		addIndexToDevArray(group2developers);
 		group1developers.sort(randomizer);
@@ -113,6 +120,8 @@
 		for (var i = 0; i < rows; i++) {
 			pairsEl.appendChild(getPairEl(group1developers[i], group2developers[i]));
 		}
+
+		setTimeout(showDevelopers, 0);
 	}
 
 	function clearDevelopersList() {

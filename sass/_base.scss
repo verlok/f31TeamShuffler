@@ -28,6 +28,7 @@ h1 {
 
 .pair {
 	margin: 1em 0;
+	border: 1px solid $border-color;
 	border-radius: $border-radius;
 	box-shadow: 0 5px 10px rgba(0,0,0,.2);
 }
@@ -40,25 +41,17 @@ h1 {
 	@extend .flexColumns;
 	@extend .flexGrow;
 	padding: 1em;
-	border-top: 1px solid $border-color;
-	border-left: 1px solid $border-color;
-	border-bottom: 1px solid $border-color;
-	&:last-child {
-		border-right: 1px solid $border-color;
-	}
+	opacity: 0;
+	@include transition(opacity .3s ease-in);
 
 	.pic {
-		//align-items: flex-start;
-		//float: left;
 		width: 89px;
 		height: 89px;
 		@include flex-shrink(0);
 	}
 
 	&:first-child {
-
 		border-radius: $border-radius 0 0 $border-radius;
-
 		.info {
 			@extend .flexGrow;
 			text-align: right;
@@ -70,9 +63,7 @@ h1 {
 	}
 
 	&:last-child {
-
 		border-radius: 0 $border-radius $border-radius 0 ;
-
 		.pic {
 			margin-right: 1em;
 		}
@@ -95,6 +86,16 @@ h1 {
 		text-decoration: none;
 		&:hover {
 			text-decoration: underline;
+		}
+	}
+
+	&.appear {
+		opacity: 1;
+	}
+
+	@for $i from 0 to 16 {
+		&.i#{$i} {
+			@include transition-delay($i*.2s);
 		}
 	}
 }
